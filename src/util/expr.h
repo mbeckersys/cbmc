@@ -6,13 +6,12 @@ Author: Daniel Kroening, kroening@kroening.com
 
 \*******************************************************************/
 
-
 #ifndef CPROVER_UTIL_EXPR_H
 #define CPROVER_UTIL_EXPR_H
 
-#include <functional>
 #include "type.h"
 
+#include <functional>
 #include <list>
 
 #define forall_operands(it, expr) \
@@ -163,6 +162,10 @@ public:
   const_unique_depth_iteratort unique_depth_cbegin() const;
   const_unique_depth_iteratort unique_depth_cend() const;
 };
+
+//! Formats an expression in a generic syntax
+//! that is inspired by C/C++/Java, and is meant for debugging
+std::ostream &format_rec(std::ostream &, const exprt &);
 
 class expr_visitort
 {

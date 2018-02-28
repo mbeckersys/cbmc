@@ -10,7 +10,8 @@ Author: Daniel Kroening, kroening@kroening.com
 #ifndef CPROVER_UTIL_TYPE_H
 #define CPROVER_UTIL_TYPE_H
 
-#include <util/source_location.h>
+#include "format.h"
+#include "source_location.h"
 
 #define SUBTYPE_IN_GETSUB
 #define SUBTYPES_IN_GETSUB
@@ -114,6 +115,10 @@ public:
     return static_cast<const typet &>(find(name));
   }
 };
+
+//! Formats a type in a generic syntax
+//! that is inspired by C/C++/Java, and is meant for debugging
+std::ostream &format_rec(std::ostream &, const typet &);
 
 class type_with_subtypet:public typet
 {
