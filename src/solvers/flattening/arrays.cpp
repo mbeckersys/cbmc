@@ -402,10 +402,8 @@ void arrayst::update_index_map(bool update_all)
     for(const auto &index : index_entry.second)
       std::cout << "Index set (" << index_entry.first << " = "
                 << arrays.find_number(index_entry.first) << " = "
-                << from_expr(ns, "",
-                             arrays[arrays.find_number(index_entry.first)])
-                << "): "
-                << from_expr(ns, "", index) << '\n';
+                << format(arrays[arrays.find_number(index_entry.first)])
+                << "): " << format(index) << '\n';
   std::cout << "-----\n";
 #endif
 }
