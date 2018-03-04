@@ -71,6 +71,7 @@ Author: Daniel Kroening, kroening@kroening.com
 #include "concurrency.h"
 #include "dump_c.h"
 #include "dot.h"
+#include "flowchart.h"
 #include "havoc_loops.h"
 #include "k_induction.h"
 #include "function.h"
@@ -556,6 +557,29 @@ int goto_instrument_parse_optionst::doit()
       return 0;
     }
     
+    if(cmdline.isset("flowchart")) {
+        // option: make (source) basic blocks; if false then we have a traditional flow chart
+        bool basicblocks = false;
+        if(cmdline.isset("bb")) {
+            basicblocks=true;
+        } 
+
+        namespacet ns(symbol_table);
+        if(cmdline.args.size()==2) {
+            // print to file
+            std::ofstream out(cmdline.args[1].c_str());
+            if(!out) {
+                error() << "failed to write to " << cmdline.args[1] << "'";
+                return 10;
+            }            
+            flowchart(goto_functions, ns, out, basicblocks);
+        } else {       
+            // print to stdout
+            flowchart(goto_functions, ns, std::cout, basicblocks);
+        }
+        return 0;
+    }
+
     if(cmdline.isset("dot"))
     {
       namespacet ns(symbol_table);
@@ -1295,6 +1319,8 @@ void goto_instrument_parse_optionst::help()
     " --interpreter                do concrete execution\n"
     " --count-eloc                 count effective lines of code\n"
     " --list-eloc                  list full path names of lines containing code\n"
+    " --flowchart                  generate flowchart as xml\n"
+    " --bb                         make a flowchart with basic blocks\n"
     "\n"
     "Diagnosis:\n"
     " --show-loops                 show the loops in the program\n"
