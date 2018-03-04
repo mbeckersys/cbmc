@@ -76,12 +76,12 @@ minisat2-download:
 
 glucose-download:
 	@echo "Downloading glucose-syrup"
-	@lwp-download http://www.labri.fr/perso/lsimon/downloads/softwares/glucose-syrup.tgz
-	@tar xfz glucose-syrup.tgz
+	@lwp-download http://www.labri.fr/perso/lsimon/downloads/softwares/glucose-syrup-4.1.tgz
+	@tar xfz glucose-syrup-4.1.tgz
 	@rm -Rf ../glucose-syrup
-	@mv glucose-syrup ../
-	@(cd ../glucose-syrup; patch -p1 < ../scripts/glucose-syrup-patch)
-	@rm glucose-syrup.tgz
+	@mv glucose-syrup-4.1 ../glucose-syrup
+	#@(cd ../glucose-syrup; patch -p1 < ../scripts/glucose-syrup-patch)
+	@rm glucose-syrup-4.1.tgz
 
 zlib-download:
 	@echo "Downloading zlib 1.2.8"
