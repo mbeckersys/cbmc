@@ -1,3 +1,5 @@
+INSTALLDIR=../bin
+
 DIRS = ansi-c big-int cbmc cpp goto-cc goto-instrument goto-programs \
        goto-symex langapi pointer-analysis solvers util linking xmllang \
        assembler analyses java_bytecode aa-path-symex path-symex musketeer \
@@ -107,4 +109,10 @@ libzip-build:
 	@echo "Building libzip"
 	@(cd ../libzip; BASE=`pwd`; ./configure --with-zlib=$(BASE)/zlib ; make)
 
-.PHONY: minisat2-download glucose-download zlib-download libzip-download libzip-build
+install:
+	mkdir -p $(INSTALLDIR)
+	cp cbmc/cbmc $(INSTALLDIR)/.
+	cp goto-cc/goto-cc $(INSTALLDIR)/.
+	cp goto-instrument/goto-instrument $(INSTALLDIR)/.
+
+.PHONY: minisat2-download glucose-download zlib-download libzip-download libzip-build install

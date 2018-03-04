@@ -11,6 +11,7 @@ Date: June 2006
 #ifndef GOTO_CC_GCC_MODE_H
 #define GOTO_CC_GCC_MODE_H
 
+#include <stdlib.h>
 #include "goto_cc_mode.h"
 #include "gcc_cmdline.h"
 
@@ -25,6 +26,10 @@ public:
     produce_hybrid_binary(false),
     act_as_ld(false)
   {
+      
+      _CC = get_env_var("CC");
+      _LD = get_env_var("LD");
+
   }
 
   bool produce_hybrid_binary;
@@ -32,7 +37,9 @@ public:
 protected:
   bool act_as_ld;
   std::string native_compiler_name;
-  
+  std::string _CC;
+  std::string _LD;
+
   int preprocess(
     const std::string &language,
     const std::string &src,
@@ -44,8 +51,21 @@ protected:
   
   static bool needs_preprocessing(const std::string &);
   
+  std::string get_env_var( std::string const & key ) {                                 
+      char * val;                                                                        
+      val = getenv( key.c_str() );                                                       
+      std::string retval = "";                                                           
+      if (val != NULL) {                                                                 
+          retval = val;                                                                    
+      }                                                                                  
+      return retval;                                                                        
+  }
+
   inline const char *compiler_name()
   {
+    // if $CC is set, take that one. Else default to the original code
+    if (!_CC.empty()) return _CC.c_str();
+
     if(native_compiler_name.empty())
     {
       std::string::size_type pos=base_name.find("goto-gcc");
@@ -72,6 +92,9 @@ protected:
 
   inline const char *linker_name()
   {
+    // if $LD is set, take that one. Else default to the original code
+    if (!_LD.empty()) return _LD.c_str();
+
     if(native_compiler_name.empty())
     {
       std::string::size_type pos=base_name.find("goto-ld");
