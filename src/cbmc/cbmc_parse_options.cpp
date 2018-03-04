@@ -151,6 +151,9 @@ void cbmc_parse_optionst::get_command_line_options(optionst &options)
   if(cmdline.isset("show-vcc"))
     options.set_option("show-vcc", true);
 
+  if(cmdline.isset("check-assumptions"))
+    options.set_option("check-assumptions", true);
+
   if(cmdline.isset("cover"))
     options.set_option("cover", cmdline.get_values("cover"));
 
@@ -944,6 +947,12 @@ bool cbmc_parse_optionst::process_goto_program(
     // add loop ids
     goto_functions.compute_loop_numbers();
     
+    // Add assert(false) after each assumption to check satisfiability
+    if(cmdline.isset("check-assumptions")) {        
+        status() << "Checking assumption satisfiability" << eom;
+        make_assert_sat_assumptions(goto_functions);
+    }   
+
     // instrument cover goals
     
     if(cmdline.isset("cover"))
@@ -1148,6 +1157,7 @@ void cbmc_parse_optionst::help()
     " --no-assertions              ignore user assertions\n"
     " --no-assumptions             ignore user assumptions\n"
     " --error-label label          check that label is unreachable\n"
+    " --check-assumptions          check whether assumptions are satisfiable\n"
     " --cover CC                   create test-suite with coverage criterion CC\n"
     " --mm MM                      memory consistency model for concurrent programs\n"
     "\n"

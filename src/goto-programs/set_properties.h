@@ -21,6 +21,7 @@ void set_properties(
 
 void make_assertions_false(goto_functionst &);  
 void make_assertions_false(goto_modelt &);  
+void make_assert_sat_assumptions(goto_functionst &);
 
 void label_properties(goto_functionst &);
 void label_properties(goto_programt &);
