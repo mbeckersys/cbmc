@@ -275,6 +275,12 @@ void cbmc_parse_optionst::get_command_line_options(optionst &options)
   else
     options.set_option("assertions", true);
 
+  // every assert includes an assume
+  if(cmdline.isset("assert-implies-assume"))
+    options.set_option("assert-implies-assume", true);
+  else
+    options.set_option("assert-implies-assume", false);
+
   // use assumptions
   if(cmdline.isset("no-assumptions"))
     options.set_option("assumptions", false);
@@ -1156,6 +1162,7 @@ void cbmc_parse_optionst::help()
     " --nan-check                  check floating-point for NaN\n"
     " --no-assertions              ignore user assertions\n"
     " --no-assumptions             ignore user assumptions\n"
+    " --assert-implies-assume      assertions build on each other\n"
     " --error-label label          check that label is unreachable\n"
     " --check-assumptions          check whether assumptions are satisfiable\n"
     " --cover CC                   create test-suite with coverage criterion CC\n"

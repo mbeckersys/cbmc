@@ -27,7 +27,7 @@ Author: Daniel Kroening, kroening@kroening.com
   "(assert-to-assume)" \
   "(div-by-zero-check)(no-div-by-zero-check)" \
   "(undefined-shift-check)" \
-  "(no-assertions)(no-assumptions)(uninitialized-check)" \
+  "(assert-implies-assume)(no-assertions)(no-assumptions)(uninitialized-check)" \
   "(nan-check)(no-nan-check)" \
   "(race-check)(scc)(one-event-per-cycle)" \
   "(minimum-interference)" \

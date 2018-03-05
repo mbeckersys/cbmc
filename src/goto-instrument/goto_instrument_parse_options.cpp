@@ -866,6 +866,12 @@ void goto_instrument_parse_optionst::instrument_goto_program()
     options.set_option("assertions", false);
   else
     options.set_option("assertions", true);
+    
+  // every assert includes an assume
+  if(cmdline.isset("assert-implies-assume"))
+    options.set_option("assert-implies-assume", true);
+  else
+    options.set_option("assert-implies-assume", false);
 
   // use assumptions
   if(cmdline.isset("no-assumptions"))

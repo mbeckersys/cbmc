@@ -30,7 +30,7 @@ class optionst;
   "(depth):(partial-loops)(no-unwinding-assertions)(unwinding-assertions)" \
   "(bounds-check)(pointer-check)(div-by-zero-check)(memory-leak-check)" \
   "(signed-overflow-check)(unsigned-overflow-check)(float-overflow-check)(nan-check)" \
-  "(no-assertions)(no-assumptions)" \
+  "(assert-implies-assume)(no-assertions)(no-assumptions)" \
   "(xml-ui)(xml-interface)(json-ui)" \
   "(smt1)(smt2)(fpa)(cvc3)(cvc4)(boolector)(yices)(z3)(opensmt)(mathsat)" \
   "(no-sat-preprocessor)" \

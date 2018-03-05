@@ -48,6 +48,7 @@ public:
     enable_assertions=_options.get_bool_option("assertions");
     enable_assumptions=_options.get_bool_option("assumptions");    
     error_labels=_options.get_list_option("error-label");
+    enable_assert_implies_assume=_options.get_bool_option("assert-implies-assume");
   }
 
   typedef goto_functionst::goto_functiont goto_functiont;
@@ -110,6 +111,7 @@ protected:
   bool enable_assert_to_assume;
   bool enable_assertions;
   bool enable_assumptions;
+  bool enable_assert_implies_assume;
 
   typedef optionst::value_listt error_labelst;
   error_labelst error_labels;
@@ -1734,6 +1736,23 @@ void goto_checkt::goto_check(goto_functiont &goto_function)
       new_code.instructions.pop_front();
       it++;
     }
+  }
+
+  if (enable_assert_implies_assume)
+  {
+    // another pass, now that all assertions (user-provided and generated) are there
+    Forall_goto_program_instructions(it, goto_program)
+      {
+        t=it;
+        goto_programt::instructiont &i=*it;
+        if(i.is_assert())
+        {
+          goto_programt::targett t = goto_program.insert_after(it);
+          t->make_assumption (it->guard);
+          t->source_location = it->source_location;
+          t->source_location.set_comment("assert implies assume");
+        }
+      }
   }
 }
 
